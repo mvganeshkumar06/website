@@ -1,5 +1,5 @@
 import React from 'react';
-import { Container, Text } from '@zeal-ui/core';
+import { Container, Text, List, ListItem } from '@zeal-ui/core';
 import { EducationStyled } from '../styles/EducationStyled';
 
 const Education = ({ title, duration, qualification, grade }) => {
@@ -9,8 +9,10 @@ const Education = ({ title, duration, qualification, grade }) => {
 				<Text type="subHeading2">{title}</Text>
 				<Text>{duration}</Text>
 			</Container>
-			<Text>{qualification}</Text>
-			<Text>{grade}</Text>
+			<List>
+				<ListItem>{qualification}</ListItem>
+				<ListItem>{grade}</ListItem>
+			</List>
 		</EducationStyled>
 	);
 };

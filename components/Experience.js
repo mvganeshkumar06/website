@@ -9,13 +9,9 @@ const Experience = ({ title, duration, details }) => {
 				<Text type="subHeading2">{title}</Text>
 				<Text>{duration}</Text>
 			</Container>
-			<List styleType="none">
+			<List>
 				{details.map((info) => {
-					return (
-						<ListItem key={info} className="experienceDetailsListItem">
-							{info}
-						</ListItem>
-					);
+					return <ListItem key={info}>{info}</ListItem>;
 				})}
 			</List>
 		</ExperienceStyled>
