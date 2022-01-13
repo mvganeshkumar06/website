@@ -1,6 +1,6 @@
 const projectItems = [
 	{
-		title: 'Zeal UI – Component Library',
+		title: 'Zeal UI - Component Library',
 		tags: ['React JS', 'Styled Components', 'Webpack', 'NPM'],
 		details: [
 			'A simple, minimalistic component library that provides reusable and customizable components.',
@@ -10,7 +10,7 @@ const projectItems = [
 		live: 'https://zeal-ui.netlify.app',
 	},
 	{
-		title: 'Zeal Cart – Ecommerce App',
+		title: 'Zeal Cart - Ecommerce App',
 		tags: ['React JS', 'Zeal UI', 'Node JS', 'MongoDB'],
 		details: [
 			'An ecommerce platform where users can create their own account, maintain products in their wish list and cart.',
@@ -21,7 +21,7 @@ const projectItems = [
 		live: 'https://zeal-cart.netlify.app',
 	},
 	{
-		title: 'Portfolio – Website',
+		title: 'Portfolio - Website',
 		tags: ['Next JS', 'Zeal UI'],
 		details: [
 			'My space on the web where I share my learnings, experiences and showcase my work.',

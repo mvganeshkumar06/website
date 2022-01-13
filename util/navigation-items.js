@@ -21,11 +21,11 @@ const headerContents = {
 };
 
 const footerContents = {
-	title: 'M V Ganesh Kumar',
 	logo: {
 		src: '/profile.jpg',
 		alt: 'profile',
 	},
+	title: 'M V Ganesh Kumar',
 	links: [
 		{
 			title: 'Social',
