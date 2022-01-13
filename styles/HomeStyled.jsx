@@ -2,18 +2,18 @@ import styled from 'styled-components';
 import { Container } from '@zeal-ui/core';
 
 export const HomeStyled = styled(Container)`
-	.homeSubHeading {
-		width: 90%;
+	.homeContainer {
+		margin-top: 2rem;
 	}
 
 	@media (min-width: ${({ theme }) => theme.breakpoint.tabletPotrait}) {
-		.homeSubHeading {
+		.homeContainer {
 			width: 70%;
 		}
 	}
 
 	@media (min-width: ${({ theme }) => theme.breakpoint.desktop}) {
-		.homeSubHeading {
+		.homeContainer {
 			width: 50%;
 		}
 	}
