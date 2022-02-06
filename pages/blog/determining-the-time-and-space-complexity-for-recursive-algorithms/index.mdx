@@ -1,0 +1,301 @@
+import { PostContainer, CodeBlock, Image } from '../../../components';
+import { Alert, Text } from '@zeal-ui/core';
+
+<PostContainer id={9}>
+
+## Introduction
+
+It's relatively more intuitive to compute the complexity for iterative algorithms than when compared to recursive ones because during recursion we'll be solving the problem in terms of multiple subproblems and the call stack will be keeping track of the state of each subproblem.
+
+You see there are a lot of moving parts here. That's why visualizing the flow of recursion helps us to compute the complexity of recursive algorithms with ease.
+
+By the end of this post, you will be able to understand and compute the time and space complexity for any recursive algorithm. So let's get started.
+
+<Alert width="100%">
+	<Text>
+		The prerequisite for this post is that you need to know the concepts related to time/space
+		complexity, logarithms, and recursion. If you haven't learned them read my posts{' '}
+		<a href="https://www.mvganeshkumar.com/blog" target="_blank" title="Prerequisite posts">
+			here
+		</a>{' '}
+		before continuing with this post.
+	</Text>
+</Alert>
+
+---
+
+## Computing time/space complexity for recursive algorithms
+
+We can compute the time and space complexity for any recursive algorithm by following these steps,
+
+1. Derive the recurrence relation for the algorithm.
+
+2. Draw the recursive tree diagram using the recurrence relation.
+
+3. The time complexity is the sum of the total time taken at each level of the recursive tree (because during recursion we will be taking some amount of time at each level to compute the solutions of the smaller sub-problems).
+
+4. The space complexity is equal to the height of the recursive tree (because the maximum size of the call stack during recursion will be equal to the height of the recursive tree).
+
+Don't worry if you did not understand these steps in the first go, everything will be clear once we have practiced computing the time and space complexity for some recursive algorithms.
+
+Let's see some recursive code and compute its time and space complexity using the above-mentioned steps.
+
+### Problem 1
+
+<CodeBlock
+	language="js"
+	code={`
+const fun = (n) => {
+    if (n <= 1) {
+        return;
+    }
+    console.log(n);
+    fun(n / 2);
+};
+    `}
+/>
+
+What is the time and space complexity for this code?
+
+-   Let's assume that the function takes `T(n)` time.
+-   The base case and the print statement takes some constant time let's say `c`.
+-   Now there is a recursive call for `n/2` which will take `T(n/2)` time.
+-   So for the recursive case, we have the equation `T(n)=T(n/2)+c`.
+-   And for the base case, we have the equation `T(1)=c`.
+-   These two equations are called the `recurrence relation`.
+-   Now that we have derived the recurrence relation let's see the recursive tree diagram.
+-   In the recursive tree diagram, we will have the non-recursive part of the recurrence relation as the root and the recursive part as the child of the root.
+-   After that, we will expand the recursive tree to some levels/heights to understand the pattern of the recursion.
+-   Once we have done that, we will find the sum of the total time taken at each level which will give us the time complexity, and the height of the tree will give us the space complexity.
+
+Refer to the recursive tree diagram below to understand this better.
+
+<Image
+	src="https://res.cloudinary.com/mvganeshkumar/image/upload/website/blog/determining-the-time-and-space-complexity-for-recursive-algorithms/recursive-tree-1.png"
+	alt="Recursive Tree 1"
+	sizes={['100%', '21rem', '25rem']}
+/>
+
+-   In this diagram, we are expanding the tree using the recurrence relation.
+-   For example, we know that `T(n)=T(n/2)+c` where `c` is the non-recursive part and we can find `T(n/2)=T(n/4)+c` and so on.
+-   If you observe, the time taken at each level is `c` which is constant time.
+-   The input changes like n &rarr; n/2 &rarr; n/4 &rarr; n/8 &rarr; ... &rarr; n/2<sup>h</sup> where `h` is the height of the tree. So the input when the recursion stops is n/2<sup>h</sup>.
+-   Also based on the base condition we know that the value of the input when the recursion stops is 1.
+-   So we have n/2<sup>h</sup> = 1 and we need to find `h` which is the height of the tree.
+-   This can be rewritten as 2<sup>h</sup> = n.
+-   Here we can use logarithm. So the above equation can be converted into h = log<sub>2</sub>n.
+-   Hence the height of the tree is log(n) and for each level or height, the time taken is `c` which is constant time.
+-   So the total time complexity is `O(clog(n))` which can be written as `O(log(n))` because generally constants will not be considered while computing the complexity.
+-   And the space complexity is `O(log(n))` because the height of the recursive tree is log(n).
+
+### Problem 2
+
+<CodeBlock
+	language="js"
+	code={`
+const fun = (n) => {
+    if (n === 0) {
+        return;
+    }
+    console.log(n);
+    fun(n - 1);
+};
+    `}
+/>
+
+What is the time and space complexity for this code?
+
+-   Let's assume that the function takes `T(n)` time.
+-   The base case and the print statement takes some constant time let's say `c`.
+-   Now there is a recursive call for `n-1` which will take `T(n-1)` time.
+-   So for the recursive case, we have the equation `T(n)=T(n-1)+c`.
+-   And for the base case, we have the equation `T(0)=c`.
+
+Now that we have derived the recurrence relation let's see the recursive tree diagram.
+
+<Image
+	src="https://res.cloudinary.com/mvganeshkumar/image/upload/website/blog/determining-the-time-and-space-complexity-for-recursive-algorithms/recursive-tree-2.png"
+	alt="Recursive Tree 2"
+	sizes={['100%', '21rem', '25rem']}
+/>
+
+-   If you observe, the time taken at each level is `c` which is constant time.
+-   The input changes like n &rarr; n-1 &rarr; n-2 &rarr; n-3 &rarr; ... &rarr; n-h where `h` is the height of the tree. So the input when the recursion stops is n-h.
+-   Also based on the base condition we know that the value of the input when the recursion stops is 0.
+-   So we have n-h = 0 => h=n.
+-   Hence the height of the tree is `n` and for each level or height, the time taken is `c` which is constant time.
+-   So the total time complexity is `O(cn)` which can be written as `O(n)`.
+-   And the space complexity is `O(n)` because the height of the recursive tree is `n`.
+
+### Problem 3
+
+<CodeBlock
+	language="js"
+	code={`
+const fun = (n) => {
+    if (n <= 1) {
+        return;
+    }
+    for (let i = 0; i < n; i++) {
+        console.log(n);
+    }
+    fun(n / 2);
+    fun(n / 2);
+}
+    `}
+/>
+
+What is the time and space complexity for this code?
+
+-   Let's assume that the function takes `T(n)` time.
+-   The base case takes some constant time let's say `c`.
+-   The print statement takes linear time let's say `n`.
+-   Now there are two recursive calls each for `n/2` which will take `2T(n/2)` time.
+-   So for the recursive case, we have the equation `T(n)=2T(n/2)+n+c`.
+-   And for the base case, we have the equation `T(1)=c`.
+
+Now that we have derived the recurrence relation let's see the recursive tree diagram.
+
+<Image
+	src="https://res.cloudinary.com/mvganeshkumar/image/upload/website/blog/determining-the-time-and-space-complexity-for-recursive-algorithms/recursive-tree-3.png"
+	alt="Recursive Tree 3"
+	sizes={['100%', '21rem', '25rem']}
+/>
+
+-   If you observe, the time taken at each level is `n` which is linear time (you can expand the tree further to understand).
+-   The input changes like n &rarr; n/2 &rarr; n/4 &rarr; n/8 &rarr; ... &rarr; n/2<sup>h</sup> where `h` is the height of the tree. So the input when the recursion stops is n/2<sup>h</sup>.
+-   Also based on the base condition we know that the value of the input when the recursion stops is 1.
+-   So we have n/2<sup>h</sup> = 1 which can be rewritten as 2<sup>h</sup>=n.
+-   Here we can use logarithm. So the above equation can be converted into h = log<sub>2</sub>n.
+-   Hence the height of the tree is log(n) and for each level or height, the time taken is `n` which is linear time.
+-   So the total time complexity is `O(nlog(n))`.
+-   And the space complexity is `O(log(n))` because the height of the recursive tree is log(n).
+
+### Problem 4
+
+<CodeBlock
+	language="js"
+	code={`
+const fun = (n) => {
+    if (n === 0) {
+        return;
+    }
+    console.log(n);
+    fun(n - 1);
+    fun(n - 1);
+}
+    `}
+/>
+
+What is the time and space complexity for this code?
+
+-   Let's assume that the function takes `T(n)` time.
+-   The base case and the print statement takes some constant time let's say `c`.
+-   Now there are two recursive calls each for `n-1` which will take `2T(n-1)` time.
+-   So for the recursive case, we have the equation `T(n)=2T(n-1)+c`.
+-   And for the base case, we have the equation `T(0)=c`.
+
+Now that we have derived the recurrence relation let's see the recursive tree diagram.
+
+<Image
+	src="https://res.cloudinary.com/mvganeshkumar/image/upload/website/blog/determining-the-time-and-space-complexity-for-recursive-algorithms/recursive-tree-4.png"
+	alt="Recursive Tree 4"
+	sizes={['100%', '21rem', '25rem']}
+/>
+
+-   If you observe, the time taken at each level is not the same (you can expand the tree further to understand).
+-   The time taken at each level increases (as we go down) like c &rarr; 2c &rarr; 4c &rarr; 8c and so on. Now we have to find the sum of this series of numbers which will give us the total time taken.
+
+<br />
+
+-   If you observe, this series is a geometric progression.
+    > A geometric progression (gp) is a series of numbers that starts with some initial value `a` and the rest of the values in the series are obtained by multiplying the previous value with some common ratio `r`.
+    >
+    > For example, 1 &rarr; 3 &rarr; 9 &rarr; 27 &rarr; 81 ... is a gp where the initial value is 1 and the common ratio is 3.
+-   To calculate the sum of the gp series of size `n` we can use the formula,
+    > sum of gp = a(r<sup>n</sup>-1)/(r-1)
+-   Now coming back to our code, we see that the time taken at each level of the recursive tree forms a gp with an initial value of c and the common ratio of 2.
+-   But to find the total time using the above formula we need to find the number of terms in this series which is nothing but the height of the tree.
+
+<br />
+
+-   So let's find the height of the tree and then find the total time taken.
+-   The input changes like n &rarr; n-1 &rarr; n-2 &rarr; n-3 &rarr; ... &rarr; n-h where `h` is the height of the tree. So the input when the recursion stops is n-h.
+-   Also based on the base condition we know that the value of the input when the recursion stops is 0.
+-   So we have n-h = 0 => h=n. Hence the height of the tree is `n`.
+-   Now using the formula mentioned above the total time taken will be,
+    > total time = c(2<sup>n</sup>-1)/(2-1)
+    >
+    > total time = c(2<sup>n</sup>-1)
+-   This is of the order 2<sup>n</sup> so the total time complexity is `O(2^n)`.
+-   And the space complexity is `O(n)` because the height of the recursive tree is `n`.
+
+### Problem 5
+
+<CodeBlock
+	language="js"
+	code={`
+const fun = (n) => {
+    if (n === 0) {
+        return;
+    }
+    console.log(n);
+    for (let i = 0; i < n; i++) {
+        fun(n - 1);
+    }
+}
+    `}
+/>
+
+What is the time and space complexity for this code?
+
+-   Let's assume that the function takes `T(n)` time.
+-   The base case and the print statement takes some constant time let's say `c`.
+-   Now there are `n` recursive calls each for `n-1` which will take `nT(n-1)` time.
+-   So for the recursive case, we have the equation `T(n)=nT(n-1)+c`.
+-   And for the base case, we have the equation `T(0)=c`.
+
+Now that we have derived the recurrence relation let's see the recursive tree diagram.
+
+<Image
+	src="https://res.cloudinary.com/mvganeshkumar/image/upload/website/blog/determining-the-time-and-space-complexity-for-recursive-algorithms/recursive-tree-5.png"
+	alt="Recursive Tree 5"
+	sizes={['100%', '21rem', '25rem']}
+/>
+
+-   If you observe, the time taken at each level increases (as we go down) like c &rarr; nc &rarr; n^2c &rarr; n^3c and so on. Now we have to find the sum of this series of numbers which will give us the total time taken.
+-   Since this series is a geometric progression with an initial value of `c` and a common ratio of `n` we can use the sum of gp formula.
+-   But to calculate the sum of gp, we also need to find the number of terms in this series which is the height of the tree.
+
+<br />
+
+-   The input changes like n &rarr; n-1 &rarr; n-2 &rarr; n-3 &rarr; ... &rarr; n-h where `h` is the height of the tree. So the input when the recursion stops is n-h.
+-   Also based on the base condition we know that the value of the input when the recursion stops is 0.
+-   So we have n-h = 0 => h=n. Hence the height of the tree is `n`.
+-   Now using the sum of gp formula the total time taken will be,
+    > total time = c(n<sup>n</sup>-1)/(n-1)
+-   This is of the order n<sup>n</sup> so the total time complexity is `O(n^n)`.
+-   And the space complexity is `O(n)` because the height of the recursive tree is `n`.
+
+---
+
+## Conclusion
+
+Here are some of the key takeaways from this post.
+
+-   We can compute the time and space complexity for any recursive algorithm easily by following these steps,
+
+    1. Derive the recurrence relation for the algorithm.
+
+    2. Draw the recursive tree diagram using the recurrence relation.
+
+    3. The time complexity is the sum of the total time taken at each level of the recursive tree (because during recursion we will be taking some amount of time at each level to compute the solutions of the smaller sub-problems).
+
+    4. The space complexity is equal to the height of the recursive tree (because the maximum size of the call stack during recursion will be equal to the height of the recursive tree).
+
+-   A geometric progression (gp) is a series of numbers that starts with some initial value `a` and the rest of the values in the series are obtained by multiplying the previous value with some common ratio `r`.
+-   For example, 1 &rarr; 3 &rarr; 9 &rarr; 27 &rarr; 81 ... is a gp where the initial value is 1 and the common ratio is 3.
+-   To calculate the sum of the gp series of size `n` we can use the formula,
+    > sum of gp = a(r<sup>n</sup>-1)/(r-1)
+
+</PostContainer>

@@ -1,7 +1,8 @@
+import React from 'react';
 import Document, { Head, Html, Main, NextScript } from 'next/document';
 import { ServerStyleSheet } from 'styled-components';
 import { ColorModeScript } from '@zeal-ui/core';
-import customTheme from '../custom-theme';
+import { customTheme } from '../util';
 
 class MyDocument extends Document {
 	static async getInitialProps(ctx) {

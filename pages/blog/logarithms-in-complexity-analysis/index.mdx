@@ -1,0 +1,170 @@
+import { PostContainer, CodeBlock } from '../../../components';
+import { Alert, Text } from '@zeal-ui/core';
+
+<PostContainer id={7}>
+
+## Introduction
+
+Logarithms occur quite often in the time/space complexity of many algorithms.
+
+But what exactly is a logarithm and how to compute the time/space complexity when the logarithm factor comes into the picture?
+
+This is what we will be learning in this blog post.
+
+---
+
+## What is a logarithm
+
+The logarithm of a number `a` with base `b` is the power that `b` should be raised to such that it's equal to `a`.
+
+> If log<sub>b</sub>a = x then b<sup>x</sup> = a
+
+Let's see some examples
+
+-   log<sub>2</sub>16 = 4 because 2<sup>4</sup> gives 16
+
+-   log<sub>4</sub>64 = 3 because 4<sup>3</sup> gives 64
+
+-   log<sub>10</sub>100 = 2 because 10<sup>2</sup> gives 100
+
+In computer science, we generally use base 2 for logarithm.
+
+---
+
+## Computing complexities that involve the logarithm
+
+Let's see some examples where logarithm comes into the picture while computing complexities.
+
+### Example 1
+
+<CodeBlock
+	language="js"
+	code={`
+for (let i = 0; i < n; i *= 2) {
+	console.log(i);
+}
+    `}
+/>
+
+What is the time complexity for this code?
+
+-   Here we just have a single loop so the time complexity is equal to the number of times the loop gets executed.
+-   If you observe, the value of `i` changes like 0 &rarr; 2 &rarr; 4 &rarr; 8 &rarr; ... &rarr; 2<sup>k</sup> where `k` is the number of times the loop runs. So the value of `i` when the loop stops is 2<sup>k</sup>.
+-   Also based on the loop condition we know that the loop will stop when `i = n`.
+-   So we have 2<sup>k</sup> = n and we need to find `k` which is the number of times the loop gets executed.
+-   In other words, we need to find what is the power that 2 should be raised to such that it's equal to n. Does this ring a bell?
+-   This is the definition of the logarithm. So the above equation can be converted into k = log<sub>2</sub>n.
+-   So the time complexity is `O(log(n))` or logarithmic time where the base is 2.
+-   When the base is 2 we generally don't mention it.
+
+### Example 2
+
+<CodeBlock
+	language="js"
+	code={`
+for (let i = n; i > 1; i /= 2) {
+	console.log(i);
+}
+    `}
+/>
+
+What is the time complexity for this code?
+
+-   Here the time complexity is equal to the number of times the loop gets executed.
+-   If you observe, the value of `i` changes like n &rarr; n/2 &rarr; n/4 &rarr; n/8 &rarr; ... &rarr; n/2<sup>k</sup> where `k` is the number of times the loop runs. So the value of `i` when the loop stops is n/2<sup>k</sup>.
+-   Also based on the loop condition we know that the loop will stop when `i = 1`.
+-   So we have n/2<sup>k</sup> = 1 and we need to find `k` which is the number of times the loop gets executed.
+-   This can be rewritten as 2<sup>k</sup> = n.
+-   Again here we use logarithm. So the above equation can be converted into k = log<sub>2</sub>n.
+-   So the time complexity is `O(log(n))` or logarithmic time.
+
+### Example 3
+
+<CodeBlock
+	language="js"
+	code={`
+for (let i = 0; i < n; i++) {
+	for (let j = n; j < n; j *= 2) {
+		console.log(i + j);
+	}
+}
+    `}
+/>
+
+What is the time complexity for this code?
+
+-   Here the inner loop is the same as our first example and it will take `O(log(n))` or logarithmic time.
+-   But the inner loop runs for each value of `i` in the outer loop.
+-   Since the outer loop runs for `O(n)` or linear time, the time complexity is `O(n*log(n))` or linear logarithmic time.
+
+### Example 4
+
+This time we will see a popular searching algorithm called `binary search`.
+
+<Alert type="warning" width="100%">
+	<Text>
+		Note that we are not going to see how the algorithm works we will cover that in the upcoming
+		blog posts.
+	</Text>
+</Alert>
+
+Here we are just going to see what the algorithm does and compute its time complexity.
+
+In binary search, given an array of numbers, we will search for a key and if it's found we return true otherwise we return false.
+
+Let's analyze the code.
+
+<CodeBlock
+	language="js"
+	code={`
+const binarySearch = (arr, key) => {
+	let start = 0,
+		end = arr.length - 1;
+	while (start <= end) {
+		const mid = Math.floor((start + end) / 2);
+		if (arr[mid] === key) {
+			return true;
+		} else if (key > arr[mid]) {
+			start = mid + 1;
+		} else {
+			end = mid - 1;
+		}
+	}
+	return false;
+};
+console.log(binarySearch([2, 6, 8, 12, 17, 25], 6)); // true
+console.log(binarySearch([2, 6, 8, 12, 17, 25], 16)); // false
+    `}
+/>{' '}
+
+What is the time complexity for this code?
+
+-   Here the time complexity is equal to the number of times the loop gets executed.
+-   If the key is not present in the array, then the loop runs more times than when it is present because we return true as soon as we find the key.
+-   So we will consider the worst case where the key is not present in the array.
+-   Let's use example 2 given in the code to explain the time complexity.
+-   Initially, the `start = 0`, `end = 5`, and the number of elements from `start` till the `end` is 6.
+-   The `mid = 2`, the key is greater than the mid element so `start = 3`, `end = 5`, and the number of elements from `start` till the `end` is 3.
+-   Now the `mid = 4`, the key is smaller than the mid element so `start = 3`, `end = 3`, and the number of elements from `start` till the `end` is 1.
+-   Now the `mid = 3`, the key is greater than the mid element so `start = 4`, `end = 3`, and the number of elements from `start` till the `end` is 0.
+-   You see what we are doing here is that initially, we set the boundary `start`, `end` within which we will search the key and as the loop gets executed the boundary keeps shrinking until we either find the key or have no elements to search.
+-   So we can say that the number of times the loop gets executed is equal to the number of times the boundary shrinks which gives us the time complexity.
+-   As we have seen in the above example the size of the boundary changes like 6 &rarr; 3 &rarr; 1 &rarr; 0 this is similar to n &rarr; n/2 &rarr; n/4 &rarr; ... &rarr; n/2<sup>k</sup> where `k` is the number of times the boundary shrinks and n/2<sup>k</sup> is the size of the last boundary after which we will no elements to search.
+-   Now, all we have to do is find the value of `k` which gives us the time complexity.
+-   From the above example, we know that the size of the last boundary after which we will have no elements to search is 1.
+-   So we can say that n/2<sup>k</sup> = 1 which can be written as 2<sup>k</sup> = n.
+-   We can use logarithm here, so k = log<sub>2</sub>n.
+-   So the time complexity is `O(log(n))` or logarithmic time.
+
+---
+
+## Conclusion
+
+Here are some of the key takeaways from this post.
+
+-   The logarithm of a number `a` with base `b` is the power that `b` should be raised to such that it's equal to `a`.
+-   In other words if log<sub>b</sub>a = x then b<sup>x</sup> = a.
+-   In computer science, we generally use base 2 for logarithm.
+-   Generally when we multiply or divide by some `k` then the complexity will be `O(log(n))` where the base for the log is `k`.
+
+</PostContainer>

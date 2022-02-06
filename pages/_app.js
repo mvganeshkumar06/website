@@ -1,15 +1,14 @@
+import React from 'react';
 import { ZealProvider } from '@zeal-ui/core';
+import { customTheme, headerItems, footerItems } from '../util';
 import Head from 'next/head';
-import customTheme from '../custom-theme';
-import { headerContents, footerContents } from '../util/navigation-items';
 
 const MyApp = ({ Component, pageProps }) => {
 	return (
 		<ZealProvider
 			customTheme={customTheme}
-			headerContents={headerContents}
-			footerContents={footerContents}
-			disableSidebar
+			headerContents={headerItems}
+			footerContents={footerItems}
 		>
 			<Head>
 				<title>M V Ganesh Kumar</title>

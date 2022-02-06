@@ -1,0 +1,284 @@
+import { PostContainer, CodeBlock, Image } from '../../../components';
+import { Alert, Text } from '@zeal-ui/core';
+
+<PostContainer id={8}>
+
+## Introduction
+
+Recursion is one of the most powerful tools that we can use to solve seemingly complex problems elegantly. Also, we can extend the concept of recursion to solve many different problems.
+
+But understanding and thinking in terms of recursion can be tricky.
+
+By the end of this post, your understanding of recursion will be solid and you will be able to solve any recursion-based problem with ease. So let's get started.
+
+---
+
+## What is recursion
+
+Recursion is a concept of solving a problem by breaking down the problem into smaller sub-problems.
+
+And using the solutions of smaller sub-problems we will build the solution of the main problem.
+
+Don't worry if you did not understand this definition in the first go, everything will be clear once we have solved some problems recursively.
+
+In code, recursion occurs whenever a function calls itself inside its own function body. And the function is said to be a recursive function.
+
+A recursive function looks something like this,
+
+<CodeBlock
+	language="js"
+	code={`
+const doSomething=()=>{
+    // some code here
+    doSomething();
+    // some code here
+}
+    `}
+/>
+
+-   Here `doSomething()` is a recursive function because it calls itself inside its own function body.
+
+Let's solve some problems to understand recursion better.
+
+---
+
+## Solving problems recursively
+
+Before we proceed, note that any problem that can be solved using recursion can also be solved using iteration (ie using loops).
+
+I know what you're thinking "Loops are easier to understand and implement, then why do we need recursion?".
+
+That's a good question which we will address later in this post.
+
+### Problem 1
+
+> Find the nth term of the Fibonacci sequence
+>
+> A Fibonacci sequence looks like this 0, 1, 1, 2, 3, 5, 8, 13, 21, ...
+
+Example 1
+
+> Input &rarr; 9
+>
+> Output &rarr; 34
+
+Example 2
+
+> Input &rarr; 4
+>
+> Output &rarr; 3
+
+### Solution
+
+#### Approach
+
+-   If you observe the sequence, the current Fibonacci term is just the sum of the previous two terms.
+-   What we are doing here is, we are breaking down the bigger problem (ie finding the `nth` term) into smaller sub-problems (ie by finding the solution to the previous two terms `n-1` and `n-2`), and using them to build the solution for the current problem.
+-   So we can say that `fib(n) = fib(n-1)+fib(n-2)`, this relationship between the actual problem and the smaller sub-problems is called the `recurrence relation`.
+-   And we already know that the solution for the smallest sub-problem (ie the 0th and the 1st term) is 0 and 1 respectively, the rest of the terms can be calculated using recursion.
+-   The condition for which we already know the solution of the sub-problem is called the `base case`.
+-   Now the base case for this recurrence relation is `n=0` for which the solution is 0 and `n=1` for which the solution is 1.
+-   Let's see the code.
+
+<CodeBlock
+	language="js"
+	code={`
+const fibonacci = (n) => {
+    // Base case
+    if (n === 0 ) {
+        return 0;
+    }
+    if (n === 1) {
+        return 1;
+    }
+    // Recursive case
+    return fibonacci(n - 1) + fibonacci(n - 2);
+};
+\r
+console.log(fibonacci(9)); // 34
+console.log(fibonacci(4)); // 3
+    `}
+/>
+
+Here is the `recursive tree` diagram which is used to visualize the execution of the function calls during recursion.
+
+<Image
+	src="https://res.cloudinary.com/mvganeshkumar/image/upload/website/blog/learning-recursion-the-right-way/recursive-tree.png"
+	alt="Recursive Tree"
+	sizes={['100%', '24rem', '32rem']}
+/>
+
+-   In the diagram, the function `f(4)` is recursively computing the solution for the smaller sub-problems (ie for `f(3)` and `f(2)`) which will again be computed recursively using the solutions of their sub-problems and the recursion continues until the base case is reached.
+-   Each function will return only the solution for that particular sub-problem.
+
+Let's see another problem.
+
+### Problem 2
+
+> Find the factorial of the given number
+>
+> The factorial of a number is the result of the multiplication of all the numbers from n to 1.
+
+Example
+
+> Input &rarr; 5
+>
+> Output &rarr; `5*4*3*2*1` = 120
+
+### Solution
+
+#### Approach
+
+-   If you observe, we can use the solution of the smaller sub-problem (ie factorial of `n-1`) and multiply it with the current number to get the factorial of `n`.
+-   So the recurrence relation is `fact(n) = n*fact(n-1)`.
+-   And we already know the solution for the smallest sub-problem (ie when `n` is 1 ) is 1. So the base case is `n=1` for which the solution is 1.
+-   Let's see the code.
+
+<CodeBlock
+	language="js"
+	code={`
+const factorial = (n) => {
+    // Base case   
+    if (n === 1) {
+        return 1;
+    }
+    // Recursive case
+    return n * factorial(n - 1);
+};
+\r
+console.log(factorial(5)); // 120
+    `}
+/>
+
+Now try drawing the recursive tree diagram for this code as an exercise to understand the execution of the function calls during recursion.
+
+Let's see one more problem to make sure that our understanding of recursion is solid.
+
+### Problem 3
+
+> Given a number n, print the pattern as given below.
+
+Example 1
+
+> Input &rarr; 1
+>
+> Output &rarr; 1 1 1
+
+Example 2
+
+> Input &rarr; 2
+>
+> Output &rarr; 2 1 1 1 2 1 1 1 2
+
+Example 3
+
+> Input &rarr; 3
+>
+> Output &rarr; 3 2 1 1 1 2 1 1 1 2 3 2 1 1 1 2 1 1 1 2 3
+
+### Solution
+
+#### Approach
+
+-   If you observe the pattern, the current number is printed on the left, center, and right of the smaller pattern (ie pattern for smaller `n`).
+-   So we can use the solution of the smaller pattern to build the current pattern.
+-   First, we will print the current number (this is printed on the left of the pattern) and recursively print the smaller pattern.
+-   And again we will print the current number (this is printed on the center between the two smaller patterns) and recursively print the smaller pattern.
+-   And finally, we will print the current number (this is printed on the right of the smaller pattern).
+-   If the current number is equal to 1, then print the pattern for `n=1` and return.
+-   Let's see the code.
+
+<CodeBlock
+	language="js"
+	code={`
+const helper = (n, arr) => {
+    // Base case
+    if (n === 1) {
+        process.stdout.write("1 1 1");
+        return;
+    }
+    // Recursive case
+    process.stdout.write(n + " ");
+    helper(n - 1, arr);
+    process.stdout.write(" " + n + " ");
+    helper(n - 1, arr);
+    process.stdout.write(" " + n);
+};
+\r
+helper(3); // 3 2 1 1 1 2 1 1 1 2 3 2 1 1 1 2 1 1 1 2 3
+    `}
+/>
+
+Now try drawing the recursive tree diagram for this code as an exercise to understand the execution of the function calls during recursion.
+
+---
+
+## Working of the call stack in recursive algorithms
+
+-   Whenever a function is called, the memory for the function (along with its local variables) is allocated and is pushed onto the call stack.
+-   The call stack keeps on growing in size as long as the recursive functions are called.
+-   Once the base case is reached, the result for the smallest sub-problem will be returned to the parent function that called the current function, the memory for the current function will be de-allocated and it will be removed from the call stack.
+-   This process continues until all the functions are done with their execution and the call stack becomes empty.
+-   So the call stack plays an important role in keeping track of the local variables of different instances of the function and the order of execution of the functions during recursion.
+-   Note that if the base case of the recursive function is not defined, is incorrect, or is not reached, then the call stack keeps on growing in size and when the size exceeds a certain limit then it will lead to a `stack overflow` error and the program stops.
+-   It's known as stack overflow because the function call stack will be added with new frames on each recursive call but they will never be removed as the base case will not be reached.
+
+---
+
+## Things to note while solving problems recursively
+
+-   We can use recursion only when we can break down the problem into smaller sub-problems and use the solutions of smaller sub-problems to build the solution of the main problem.
+-   When solving problems recursively, think of how to break down the problem and how to use the solutions of smaller sub-problem to build the solution of the main problem.
+-   Also, make sure that the base case is correctly defined otherwise it will lead to a stack overflow error.
+
+---
+
+## Recursion v/s iteration, when and why
+
+All the recursive algorithms can be converted into iterative ones by using an external stack data structure and simulating the internal call stack during recursion.
+
+<Alert width="100%">
+	<Text>
+		If you want to learn more about different data structures, read my posts{' '}
+		<a
+			href="https://www.mvganeshkumar.com/blog?category=data-structure"
+			target="_blank"
+			title="Data Structure Posts"
+		>
+			here
+		</a>
+		.
+	</Text>
+</Alert>
+
+One of the advantages of recursion is that we can solve complex problems easily using recursion in just a few lines of code compared to the iterative version.
+
+But one of the disadvantages of recursion is that it has a higher time and space complexity when compared to the iterative version.
+
+<Alert type="warning" width="100%">
+	<Text>
+		Note in the upcoming blog post we will learn how to compute the time and space complexity
+		for recursive algorithms.
+	</Text>
+</Alert>
+
+So if you can solve a problem easily using iteration than recursion, then stick with the iterative version because it's efficient in terms of time and space complexity.
+
+But if the problem seems to be complex and using recursion makes it easier to solve, then stick with the recursive version.
+
+---
+
+## Conclusion
+
+Here are some of the key takeaways from this post.
+
+-   Recursion is a concept of solving a problem by breaking down the problem into smaller sub-problems. And using the solutions of smaller sub-problems we will build the solution of the main problem.
+-   The relationship between the actual problem and the smaller sub-problems is called the `recurrence relation`.
+-   The condition for which we already know the solution of the sub-problem is called the `base case`.
+-   The `recursive tree` diagram is used to visualize the execution of the function calls during recursion.
+-   The call stack is used to keep track of the local variables of different instances of the function and the order of execution of the functions during recursion.
+-   If the base case of the recursive function is not defined, is incorrect, or is not reached, then the call stack keeps on growing in size and when the size exceeds a certain limit then it will lead to a `stack overflow` error and the program stops.
+-   When solving problems recursively, think of how to break down the problem and how to use the solutions of smaller sub-problem to build the solution of the main problem.
+-   All the recursive algorithms can be converted into iterative ones by using an external stack data structure and simulating the internal call stack during recursion.
+
+</PostContainer>

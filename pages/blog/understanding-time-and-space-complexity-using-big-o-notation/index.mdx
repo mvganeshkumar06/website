@@ -1,0 +1,227 @@
+import { PostContainer, CodeBlock, Image } from '../../../components';
+import { Alert, Text } from '@zeal-ui/core';
+
+<PostContainer id={6}>
+
+## Introduction
+
+When we are presented with a problem, there can be multiple algorithms to solve it. But how do we know which algorithm is better and why?
+
+To identify which algorithm is better we can find the exact time and space taken (in any unit) by the algorithm to compute the solution. And if the algorithm takes less time and space then it's efficient, right?
+
+But the exact time or space taken (in any unit) by an algorithm depends on many factors like
+
+1. The computer that we are using, because an inefficient algorithm might perform better when using a faster computer.
+2. The programming language that we are using, because an inefficient algorithm might perform better when using a faster language.
+3. Different inputs that we are using because one algorithm might perform better on certain inputs when compared to others.
+
+This is why measuring the exact time or space taken (in any unit) by an algorithm is not an accurate way to determine its efficiency. And this is where the Time and Space complexity comes into the picture.
+
+---
+
+## What is Time and Space Complexity?
+
+The time or space complexity is the order of growth of time or space taken by an algorithm when compared to the size of the input.
+
+In simpler terms, we are just asking
+
+> How much more time or space will be required by an algorithm to solve a problem if the size of the input increases?
+
+The notation which is used to represent different time and space complexities of an algorithm is called the Big O Notation.
+
+Let's see an example where we will compute the time and space complexity of different algorithms and determine which one is better.
+
+### Problem 1
+
+> Given a string of size n, return true if there are duplicate characters otherwise return false.
+
+Example 1
+
+> Input &rarr; "abcsadcg"
+>
+> Output &rarr; true
+
+Example 2
+
+> Input &rarr; "abcshdtg"
+>
+> Output &rarr; false
+
+### Solution
+
+#### Approach 1
+
+1. Traverse the characters of the string.
+2. For each character traverse the rest of the characters and if there exists another character that is the same as the current character, then return true.
+3. Else if there exists no similar character, then return false.
+
+<CodeBlock
+	language="js"
+	code={`
+const hasDuplicate = (s) => {
+  for (let i = 0; i < s.length; i++) {
+    for (let j = i + 1; j < s.length; j++) {
+      if (s[i] === s[j]) {
+        return true;
+      }
+    }
+  }
+  return false;
+};
+\
+console.log(hasDuplicate('abcsadcg')); // true
+console.log(hasDuplicate('abcshdtg')); // false
+`}
+/>
+
+What is the time and space complexity for this approach?
+
+-   Note that we have to find the time and space taken by this function based on the size of the string which is `n`.
+-   Here we are traversing the characters of the string which would take `O(n)` or linear time.
+-   And for each character, we are again traversing the rest of the characters to check for duplicates which would take at most `O(n)` or linear time.
+-   So the total time taken is `O(n^2)` or quadratic time.
+-   Regarding the space complexity, here we are not using any additional space other than the given input string.
+-   So the space complexity is `O(1)` or constant time, which means the space complexity does not depend on the size of the string.
+
+Let's see another approach to solve this problem
+
+#### Approach 2
+
+1. Traverse the characters of the string and using an object keep track of the characters that are occurring.
+2. If a character has already occurred before, then return true.
+3. Else if no character occurred more than once, then return false.
+
+<CodeBlock
+	language="js"
+	code={`
+const hasDuplicate = (s) => {
+  const result = {};
+  for (let i = 0; i < s.length; i++) {
+    if (!result[s[i]]) {
+      result[s[i]] = 1; // Here 1 indicates that the character has occurred once
+    } else {
+      return true;
+    }
+  }
+  return false;
+};
+\
+console.log(hasDuplicate('abcsadcg')); // true
+console.log(hasDuplicate('abcshdtg')); // false
+`}
+/>
+
+What is the time and space complexity for this approach?
+
+-   Here we are just traversing the characters of the string once which would take `O(n)` or linear time.
+-   Regarding the space complexity, here we are using an object to store the occurrence of characters of the given string and at most, we will have `n` characters in the object.
+-   So the space complexity is `O(n)` or linear space.
+
+Now which approach is better
+
+-   Although the second approach takes more space `O(n)` when compared to the first approach `O(1)`.
+-   The second approach is better because the time complexity is `O(n)` which is way smaller when compared to the first approach which takes `O(n^2)`.
+-   There is always a tradeoff between time and space complexity and in that case, we usually trade space for better time complexity.
+-   In the second approach, we use additional space (by using an object) to have a better time complexity.
+
+Let's see another problem.
+
+### Problem 2
+
+> Given a string of size n, return the number of substrings in it.
+>
+> A substring is a group of characters from the given string which are continuous and occur in the same order as given in the string.
+
+> Input &rarr; "abcd"
+>
+> Output &rarr; 10
+
+The substrings are "a", "ab", "abc", "abcd, "b", "bc", "bcd", "c", "cd", "abcd".
+
+We don't need the substrings we just need to tell the count of the substrings.
+
+### Solution
+
+#### Approach
+
+For a string of any given size we can find the number of substrings using this formula `n*(n+1)/2` where `n` is the size of the given string.
+
+<CodeBlock
+	language="js"
+	code={`
+const substringCount = (s) => {
+	const n = s.length;
+	return (n * (n + 1)) / 2;
+};
+console.log(substringCount('abcd')); // 10
+`}
+/>
+
+What is the time and space complexity of this solution?
+
+-   If you observe, for a string of any size we can find the substring count directly using the formula.
+-   The operations that we are doing here are multiplication, addition, and division which takes only constant time or `O(1)` when compared to the size of the string.
+-   So the time complexity is `O(1)` or constant time.
+-   Also, we are not using any additional space, so the space complexity is `O(1)` or constant space.
+
+---
+
+## Common time/space complexities
+
+Here is a list of common time/space complexities in the increasing order of growth from best to worst complexity.
+
+`O(1)` &rarr; `O(log(n))` &rarr; `O(n)` &rarr; `O(n^2)` &rarr; `O(n*log(n))` &rarr; `O(2^n)` &rarr; `O(n!)`
+
+So far we have seen complexities like `O(1)`, `O(n)`, and `O(n^2)`.
+
+<Alert type="warning" width="100%">
+	<Text>Note that we will cover the rest of the complexities in the upcoming blog posts.</Text>
+</Alert>
+
+Here is a visual representation of all the common complexities.
+
+<Image
+	src="https://res.cloudinary.com/mvganeshkumar/image/upload/website/blog/understanding-time-and-space-complexity-using-big-o-notation/big-o-chart.png"
+	alt="Big O Chart"
+	sizes={['100%', '24rem', '32rem']}
+/>
+
+---
+
+## General tips while computing time/space complexity
+
+Here are some general tips that you can use to find the time and space complexity.
+
+1. To compute the time and space complexity, we have to find what are all the operations that we are performing in an algorithm and how many times we are performing each operation.
+2. Any arithmetic operation, return statements, and assignment operations take `O(1)` or constant time.
+3. When using Big O Notation to represent the time and space complexity we will only consider the upper bound or the worst-case scenario.
+4. Usually, we will ignore the less significant terms that exist in the complexity expression. For example, if we arrive at a time complexity that looks like `O(1+n/2+n^2)` this is the same as `O(n^2)` because if the value of `n` is really big, then the value of `1` and `n/2` is very small and does not contribute much to the time complexity when compared to `n^2` so we will ignore them. The same applies to space complexity as well.
+5. When there are different inputs we will use different variables in the complexity expression.
+
+---
+
+## Other Notations?
+
+There are different notations used to represent the time and space complexity other than Big O Notation.
+
+For example, Big Omega uses the best-case scenario and Big Theta uses the average-case scenario to represent the time and the space complexity of an algorithm.
+
+Though in practice, we often use only Big O Notation because it gives us the worst-case complexity which is easier to compute and we know for sure that our algorithm will always perform equal to or better than the Big O Notation that we have computed.
+
+---
+
+## Conclusion
+
+Here are some of the key takeaways from this post.
+
+-   We don't measure the exact time or space taken (in any unit) by an algorithm to determine its efficiency because it depends on many factors and does not provide an accurate result.
+-   Instead, we measure the time or space complexity of an algorithm which is the order of growth of time or space when compared to the size of the input.
+-   Common time/space complexities that we might encounter (from best to worst complexity)
+    -   `O(1)` &rarr; `O(log(n))` &rarr; `O(n)` &rarr; `O(n^2)` &rarr; `O(n*log(n))` &rarr; `O(2^n)` &rarr; `O(n!)`
+-   To compute the time and space complexity, we have to find what are all the operations that we are performing in an algorithm and how many times we are performing each operation.
+-   Any arithmetic operation, return statements, and assignment operations take `O(1)` or constant time.
+-   The Big O will consider the worst-case scenario, Big Omega will consider the best-case scenario, and Big Theta will consider the average-case scenario.
+-   In practice, we often use only Big O Notation.
+-   In the complexity expression, we usually ignore the less significant terms and use different terms for representing different inputs.
+
+</PostContainer>

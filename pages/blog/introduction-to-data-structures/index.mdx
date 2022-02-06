@@ -1,0 +1,161 @@
+import { PostContainer, Image } from '../../../components';
+import { Alert, Text } from '@zeal-ui/core';
+
+<PostContainer id={10}>
+
+## Introduction
+
+In programming, we often work with data very closely. We have to store them in some format so that later we can access and modify them when required.
+
+But knowing in what format to store the data matters a lot because when you store the data in a format such that it's efficient to access and modify them, then all the operations performed on that data will become efficient giving us better performance.
+
+This is where data structures come into the picture.
+
+<Alert type="warning" width="100%">
+	<Text>
+		Note that in this post we will learn the basics of all the different data structures. In the
+		upcoming posts, we will learn more about each data structure in detail and also implement
+		them.
+	</Text>
+</Alert>
+
+---
+
+## What is a data structure?
+
+A data structure is a way of organizing the data such that it can be accessed and modified efficiently.
+
+Some of the common operations that are performed on a data structure are inserting, deleting, updating, searching, etc.
+
+Let's see different data structures with some examples to understand better.
+
+---
+
+## What are the types of data structures?
+
+There are two main types of data structures linear and non-linear.
+
+### Linear data structures
+
+These are the data structures where the elements are arranged linearly. There are different types of linear data structures. Let's see each one of them.
+
+#### Array
+
+<Image
+	src="https://res.cloudinary.com/mvganeshkumar/image/upload/website/blog/introduction-to-data-structures/array.png"
+	alt="Array"
+	sizes={['100%', '19rem', '21rem']}
+/>
+
+-   In an array, the elements are stored in consecutive memory locations (one after the other) and can be accessed using their index.
+-   Some of the common operations performed on an array are accessing elements at an index, inserting elements at the end, removing elements from the end, modifying elements at an index, searching for an element.
+
+#### Linked List
+
+<Image
+	src="https://res.cloudinary.com/mvganeshkumar/image/upload/website/blog/introduction-to-data-structures/linked-list.png"
+	alt="Linked List"
+	sizes={['100%', '19rem', '21rem']}
+/>
+
+-   In a linked list the elements are stored in different memory locations but are linked together with references (a reference is just an address of an element in the memory with which we can access that element).
+-   Each element has some value and a reference to the next element.
+-   The reference to the first element is called the `head` and the last element is called the `tail`.
+-   The next for the last element is `null` which is used to detect the end of the list.
+-   Unlike arrays, there is no index here so the elements can be accessed only by traversing the linked list from the `head`.
+-   Some of the common operations performed on a linked list are inserting, deleting at any given position, searching for an element.
+
+#### Stack
+
+<Image
+	src="https://res.cloudinary.com/mvganeshkumar/image/upload/website/blog/introduction-to-data-structures/stack.png"
+	alt="stack"
+	sizes={['70%', '12rem', '14rem']}
+/>
+
+-   In a stack, the elements are stacked on top of each other, like a stack of books.
+-   It is often called a `last-in-first-out` data structure because whatever element that came last will be accessed first.
+-   We will also have the reference to the `top` of the stack, using which we will perform all the operations.
+-   Some of the common operations performed on a stack are accessing the `top` element, inserting at the `top`, and deleting from the `top`.
+
+#### Queue
+
+<Image
+	src="https://res.cloudinary.com/mvganeshkumar/image/upload/website/blog/introduction-to-data-structures/queue.png"
+	alt="Queue"
+	sizes={['100%', '19rem', '21rem']}
+/>
+
+-   In a queue, the elements are arranged sequentially from left to right, like a queue of people.
+-   It is often called a `first-in-first-out` data structure because whatever element that came first will be accessed first.
+-   We will also have the reference to the `front` and the `rear` of the queue using which we will perform all the operations.
+-   Some of the common operations performed on a queue are accessing the `front` and `rear` element, inserting at the `rear`, and deleting from the `front`.
+
+### Non-Linear data structures
+
+These are the data structures where the elements are arranged in a non-linear way. There are different types of non-linear data structures. Let's see each one of them.
+
+#### Graph
+
+<Image
+	src="https://res.cloudinary.com/mvganeshkumar/image/upload/website/blog/introduction-to-data-structures/graph.png"
+	alt="Graph"
+	sizes={['100%', '19rem', '21rem']}
+/>
+
+-   In a graph, each element is called a `node` and is connected to multiple other nodes through `edges`.
+-   A graph may be disconnected and may also contain cycles (it means that if we start traversing from any one of the nodes, then we can come back to the same node due to the presence of the cycle).
+-   Some of the common operations that are performed on a graph are adding, removing an edge between two nodes, searching for a node.
+
+#### Tree
+
+<Image
+	src="https://res.cloudinary.com/mvganeshkumar/image/upload/website/blog/introduction-to-data-structures/tree.png"
+	alt="Tree"
+	sizes={['70%', '12rem', '14rem']}
+/>
+
+-   In a tree, the elements are arranged similarly to a graph but the difference is that a tree is always connected, it will not contain any cycles and it will always have a starting node called the `root` of the tree.
+-   Some of the common operations that are performed on a tree are adding, removing a node, searching for a node.
+
+---
+
+## When to use which data structure?
+
+Every data structure has its advantages and disadvantages and when it comes to different use cases we will be using different data structures.
+
+Let's see some examples of using different data structures for different scenarios.
+
+<Alert type="warning" width="100%">
+	<Text>
+		Note that we will learn why we are using the below mentioned data structure for each
+		scenario when we learn about each data structure in detail in the upcoming posts.
+	</Text>
+</Alert>
+
+-   If you need to access elements at any given position efficiently, then use an array.
+-   If you need to insert or delete elements at any given position efficiently, then use a linked list.
+-   If you need to access the recently processed element efficiently, then use a stack.
+-   If you need to access the elements in the same order in which they were processed, then use a queue.
+-   If you need to represent some data where each element can be related to multiple other elements, then use a graph.
+-   If you need to represent some hierarchal data (with parent-child relationship), then use a tree.
+
+---
+
+## Conclusion
+
+Here are some of the key takeaways from this post.
+
+-   A data structure is a way of organizing the data so that it can be accessed and modified efficiently.
+-   There are two main types of data structures,
+    -   Linear &rarr; Array, Linked list, Stack, Queue
+    -   Non linear &rarr; Graph, Tree
+-   When to use which data structure
+    -   If you need to access elements at any given position efficiently, then use an array.
+    -   If you need to insert or delete elements at any given position efficiently, then use a linked list.
+    -   If you need to access the recently processed element efficiently, then use a stack.
+    -   If you need to access the elements in the same order in which they were processed, then use a queue.
+    -   If you need to represent some data where each element can be related to multiple other elements, then use a graph.
+    -   If you need to represent some hierarchal data (with parent-child relationship), then use a tree.
+
+</PostContainer>
