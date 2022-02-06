@@ -1,9 +1,17 @@
 import styled from 'styled-components';
 import { Container } from '@zeal-ui/core';
 
-export const HomeStyled = styled(Container)`
+const HomeStyled = styled(Container)`
 	.homeContainer {
-		margin-top: 2rem;
+		margin-bottom: 5rem;
+	}
+
+	.homeHeader {
+		margin: 2rem 0rem;
+	}
+
+	.homeHeader p {
+		margin: 0rem;
 	}
 
 	@media (min-width: ${({ theme }) => theme.breakpoint.tabletPotrait}) {
@@ -18,3 +26,5 @@ export const HomeStyled = styled(Container)`
 		}
 	}
 `;
+
+export default HomeStyled;
