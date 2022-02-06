@@ -8,8 +8,12 @@
 		"lint": "next lint"
 	},
 	"dependencies": {
-		"@zeal-ui/core": "^2.0.6",
-		"next": "12.0.4",
+		"@mdx-js/loader": "^1.6.22",
+		"@next/mdx": "^12.0.8",
+		"@zeal-ui/core": "^2.0.7",
+		"next": "^12.0.8",
+		"prettier": "^2.5.1",
+		"prism-react-renderer": "^1.2.1",
 		"react": "17.0.2",
 		"react-dom": "17.0.2",
 		"styled-components": "^5.3.3"
